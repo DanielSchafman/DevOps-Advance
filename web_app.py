@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 import requests
-
+import os
+import signal
+import json
 
 app = Flask(__name__)
 
@@ -19,5 +21,16 @@ def get_user(user_id):
        return "<H1 id='error'> no such user:" + user_id + "</H1>"
    else:
        return "User not found"
+   
+
+
+@app.route("/stop_server")
+def stopServer():
+    try:
+        os.kill(os.getpid(), signal.SIGINT)
+        return "Sever stopped" 
+    except Exception as error:
+        return str(error)
+
 if __name__ == "__main__":
     app.run(debug=True,port=5001)

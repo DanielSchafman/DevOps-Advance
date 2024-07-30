@@ -3,6 +3,9 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import creds
 import CurrentTime
+import os
+import signal
+
 
 app = Flask(__name__)
 
@@ -95,6 +98,17 @@ def delete_user(user_id):
     cursor.close()
 
     return jsonify({"status": "ok", "user_deleted": user_id}), 200
+
+
+#stopping the server
+@app.route("/stop_server")
+def stop_server():
+    try:
+        os.kill(os.getpid(), signal.SIGINT)
+        return "Server stopped"
+    except Exception as error:
+        return str(error)
+
 
 if __name__ == '__main__':
     app.run(debug=True,port=5000)
