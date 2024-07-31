@@ -4,18 +4,29 @@
 #script:
 pipeline {
     agent any
-    environment{
-        GIT_REPO = 'https://github.com/DanielSchafman/DevOps-Advance.git'
+    environment {
+        GIT_REPO = "https://github.com/DanielSchafman/DevOps-Advance.git"
+        GIT_BRANCH = "main"  // Adjust the branch if necessary
+        WORKSPACE_DIR = "${env.WORKSPACE}"  // Default Jenkins workspace directory
     }
     stages {
-        stage('clone repo') {
+        stage('Clone or Pull Repository') {
             steps {
-                git branch: 'main', url: "${GIT_REPO}"
+                script {
+                    // Check if the directory exists
+                    if (fileExists("${WORKSPACE_DIR}/.git")) {
+                        // If the repository is already cloned, pull the latest changes
+                        sh "cd ${WORKSPACE_DIR} && git pull origin ${GIT_BRANCH}"
+                    } else {
+                        // If the repository is not cloned yet, clone it
+                        sh "git clone -b ${GIT_BRANCH} ${GIT_REPO} ${WORKSPACE_DIR}"
+                    }
+                }
             }
         }
-        stage('see folder'){
-            steps{
-                sh 'ls'                
+        stage('See Folder') {
+            steps {
+                sh 'ls'
             }
         }
     }
