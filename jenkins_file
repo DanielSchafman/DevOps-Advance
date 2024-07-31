@@ -14,7 +14,9 @@ pipeline {
             }
         }
         stage('see folder'){
-            sh 'ls'
+            steps{
+                sh 'ls'                
+            }
         }
     }
 }
