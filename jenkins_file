@@ -4,21 +4,28 @@
 #script:
 pipeline {
     agent any
-    environment{
-        GIT_REPO = 'https://github.com/DanielSchafman/DevOps-Advance.git'
+    environment {
+        GIT_REPO = "https://github.com/DanielSchafman/DevOps-Advance.git"
+        GIT_BRANCH = "main"
+        WORKSPACE_DIR = "${env.WORKSPACE}"
     }
     stages {
-        stage('clone repo') {
+        stage('Clone or Pull Repository') {
             steps {
-                git branch: 'main', url: "${GIT_REPO}"
+                script {
+                    if (fileExists("${WORKSPACE_DIR}/.git")) {
+                        sh "cd ${WORKSPACE_DIR} && git pull origin ${GIT_BRANCH}"
+                    } else {
+                        sh "git clone -b ${GIT_BRANCH} ${GIT_REPO} ${WORKSPACE_DIR}"
+                    }
+                }
             }
         }
-        stage('see folder'){
-            steps{
-                sh 'ls'                
+        stage('See Folder') {
+            steps {
+                sh 'ls'
             }
         }
     }
 }
 
-testing again6
