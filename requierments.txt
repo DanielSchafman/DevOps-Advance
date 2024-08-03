@@ -1,6 +1,5 @@
 requests
 flask
-MySQLdb.cursors
 os
 signal
 selenium
