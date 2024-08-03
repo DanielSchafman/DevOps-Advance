@@ -1,5 +1,4 @@
 requests
-json
 flask
 MySQLdb.cursors
 os
