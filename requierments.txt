@@ -2,6 +2,5 @@ requests
 flask
 selenium
 webdriver-manager
-pkg-config
 libmariadb-dev-compat
 libmariadb-dev
