@@ -1,6 +1,5 @@
 requests
 flask
-signal
 selenium
 webdriver-manager
 pymysql.cursors
