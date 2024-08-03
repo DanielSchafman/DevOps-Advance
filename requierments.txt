@@ -1,0 +1,9 @@
+requests
+json
+flask
+MySQLdb.cursors
+os
+signal
+selenium
+webdriver-manager
+pymysql.cursors
