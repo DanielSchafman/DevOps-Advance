@@ -1,6 +1,5 @@
 requests
 flask
-os
 signal
 selenium
 webdriver-manager
