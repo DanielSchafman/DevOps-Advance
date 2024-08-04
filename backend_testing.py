@@ -14,15 +14,19 @@ def Rpost():
         p = requests.post(url=URL+id,headers=headers,json=data)
         if p.status_code != 200:
             raise Exception("test failed :(")
+        else:
+            print("Posted seccesfully")
     except Exception as error:
         print("We have {error} exeption and test failed")
-
+        
 
 def Rget():
     try:
         g = requests.get(url=URL + id)
         if g.status_code != 200:
             raise Exception("test failed :(")
+        else:
+            print("Get request successed")
     except Exception as error:
         print("We have {error} and test faild")
 
