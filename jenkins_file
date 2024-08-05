@@ -4,29 +4,32 @@
 #script:
 pipeline {
     agent any
-    environment {
-        GIT_REPO = "https://github.com/DanielSchafman/DevOps-Advance.git"
-        GIT_BRANCH = "main"
-        WORKSPACE_DIR = "${env.WORKSPACE}"
-    }
     stages {
-        stage('Clone or Pull Repository') {
+        stage('build') {
             steps {
-                script {
-                    if (fileExists("${WORKSPACE_DIR}/.git")) {
-                        sh "cd ${WORKSPACE_DIR} && git pull origin ${GIT_BRANCH}"
-                    } else {
-                        sh "git clone -b ${GIT_BRANCH} ${GIT_REPO} ${WORKSPACE_DIR}"
-                    }
-                }
+                git branch: 'main', url: 'https://github.com/DanielSchafman/DevOps-Advance.git'
             }
         }
-        stage('See Folder') {
-            steps {
-                sh 'ls'
+        stage('downloading pakages'){
+            steps{
+                sh '''#!/bin/bash
+                python3 -m venv my_venv &&
+                source /var/jenkins_home/workspace/advance_project_ci/my_venv/bin/activate
+                pip3 install -r /var/jenkins_home/workspace/advance_project_ci/requierments.txt
+                '''
+            }
+        }
+        stage('running scripts'){
+            steps{
+                sh '''#!/bin/bash
+                source /var/jenkins_home/workspace/advance_project_ci/my_venv/bin/activate
+                nohup python3 rest_app.py &
+                nohup python3 web_app.py &
+                python3 frontend_testing.py
+                python3 backend_testing.py
+                python3 clean_environment.py
+                '''
             }
         }
     }
 }
-
-testing4
