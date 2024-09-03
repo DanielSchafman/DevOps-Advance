@@ -12,7 +12,7 @@ def root_path():
 
 @app.route("/users/<string:user_id>")
 def get_user(user_id):
-   r = requests.get("http://127.0.0.1:5000/users/{0}".format(user_id))
+   r = requests.get("/users/{0}".format(user_id))
    if r.status_code == 200:
         user_name = r.text.split('"')[7]
         return "<H1 id='user'>" + user_name + "</H1>"
@@ -32,4 +32,4 @@ def stopServer():
         return str(error)
 
 if __name__ == "__main__":
-    app.run(debug=True,port=5001)
+    app.run(host="0.0.0.0",port=5001)

@@ -1,16 +1,48 @@
-version: '3.1'
+version: '3.8'
 
 services:
-  db:
-    image: mysql:latest
-    container_name: my_mysql
+  web-app:
+    build:
+      context: ./web-app
+    ports:
+      - "8000:5001"
+    depends_on:
+      - mysql_db
+
+  rest-api:
+    build:
+      context: ./rest-api
+    ports:
+      - "8001:5000"
+    depends_on:
+      - mysql_db
+
+  close:
+    build:
+      context: ./close
+    ports:
+      - "8002:5002"
+    depends_on:
+      - mysql_db
+
+  tests:
+    build:
+      context: ./tests
+    depends_on:
+      - mysql_db
+
+  mysql_db:
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: mypassword
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     ports:
-      - "3307:3307"
+      - "3305:3307" # Adjusted port
     volumes:
-      - ./data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:

@@ -1,6 +1,6 @@
 import requests
 import pymysql.cursors
-import creds
+import database.creds as creds
 
 
 URL = "http://127.0.0.1:5000/users/"
