@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: close
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: close
+  template:
+    metadata:
+      labels:
+        app: close
+    spec:
+      containers:
+      - name: close
+        image: danielschafman/advance_project:close-latest
+        ports:
+        - containerPort: 5002

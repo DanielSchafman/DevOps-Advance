@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: close
+spec:
+  selector:
+    app: close
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 5002
+  type: NodePort

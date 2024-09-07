@@ -2,3 +2,4 @@ creds.py
 myenv/
 __pycache__/
 data/
+k8s/mysql-secret.yaml

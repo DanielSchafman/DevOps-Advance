@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tests
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tests
+  template:
+    metadata:
+      labels:
+        app: tests
+    spec:
+      containers:
+      - name: tests
+        image: danielschafman/advance_project:tests-latest

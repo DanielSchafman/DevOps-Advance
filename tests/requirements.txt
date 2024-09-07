@@ -2,5 +2,5 @@ requests
 flask
 #selenium
 #webdriver-manager
-#Flask-MySQLdb
+Flask-MySQLdb
 pymysql
